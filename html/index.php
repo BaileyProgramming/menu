@@ -9,9 +9,9 @@
 <title>cafeteria menu</title>
 <style type="text/css">
 	body {
-	background-image: url("Special.jpg");
-		color: #FFFFFF;
-		font-size: 175px;
+   /* background-image: url("Special.jpg");
+    color: #000000; */
+    font-size: 16px;
 	}
 	.header{
 		height: 400px;
@@ -34,15 +34,17 @@
 </head>
 <body>
 	<div id='header' class="header"></div>
-	<div class="single_item">
+	
 		<?php
 			//echo date("Y-m-d") . " <br />";
 			 foreach($json as $item){
+				 ?><div class="single_item"><?
 				echo $item[1] . " " . $item[2];
+				 ?></div><?
 			}
 		//print_r($json);
 		?>
-	</div>
+	
 &nbsp;
 </body>
 </html>

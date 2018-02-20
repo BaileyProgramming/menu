@@ -2,13 +2,16 @@
 $filename = "menu.json";
 //if(isset($_REQUEST['submit'])){
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$data = array($_REQUEST['date'],$_REQUEST['item'],$_REQUEST['price']);		
+	$data = array("date"=>$_REQUEST['date'],"item"=>$_REQUEST['item'],"price"=>$_REQUEST['price']);
 	if (is_numeric($_REQUEST['objindex'])){
-		exec('curl -d {"{Update:[' . $data .  ', index:' . $_REQUEST['objindex'] . '}" -H "Content-Type: application/json" -X POST api.class.baileyprogramming.com/menu');
-		update_json($data, $_REQUEST['objindex']);
+		$data['objindex'] = $_REQUEST['objindex'];
+		$data['action'] = "update";
+		exec("curl -d '" . json_encode($data) .  "' -H 'Content-Type: application/json' -X POST api.class.baileyprogramming.com/menu");
+		echo json_encode($data);
+		update_json($data);
 	}else{
-		//exec('curl -d {"{' . $data .  ', ' . $_REQUEST['objindex'] . '}" -H "Content-Type: application/json" -X POST api.class.baileyprogramming.com/menu');
-		echo "{'" . $data .  "', '" . $_REQUEST['objindex'] . "'}";
+		$data['action'] = "update";
+		exec("curl -d '" . json_encode($data) .  "' -H 'Content-Type: application/json' -X POST api.class.baileyprogramming.com/menu");
 		append_json($data);
 	}
 	
@@ -225,11 +228,11 @@ function update_json($data, $objindex){
 	readmenu();
 	//print_r($GLOBALS['data']);
 	$jdata= $GLOBALS['json'];
-	$thedate = $GLOBALS['data'];
+	
 	foreach($jdata as $key => $item){
-      if (($item[0] === $thedate[0]) || ($key == $objindex)){
+      if (($item[0] === $data['item']) || ($key == $data['objindex'])){
 		  //print_r($data);
-		  $jdata[$key] = $data;
+		  $jdata[$key] = ARRAY($data['date'],$data['item'],$data['price']);
 	  }
 	//print_r(json_encode($GLOBALS['json']));      
    	}
