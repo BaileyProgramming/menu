@@ -7,11 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		exec('curl -d {"{Update:[' . $data .  ', index:' . $_REQUEST['objindex'] . '}" -H "Content-Type: application/json" -X POST api.class.baileyprogramming.com/menu');
 		update_json($data, $_REQUEST['objindex']);
 	}else{
-		exec('curl -d {"{' . $data .  ', ' . $_REQUEST['objindex'] . '}" -H "Content-Type: application/json" -X POST api.class.baileyprogramming.com/menu');
+		//exec('curl -d {"{' . $data .  ', ' . $_REQUEST['objindex'] . '}" -H "Content-Type: application/json" -X POST api.class.baileyprogramming.com/menu');
+		echo "{'" . $data .  "', '" . $_REQUEST['objindex'] . "'}";
 		append_json($data);
 	}
 	
-	header( 'Location:edit.php' ) ;
+	//header( 'Location:edit.php' ) ;
 }else{
 ?>
 <!doctype html>
